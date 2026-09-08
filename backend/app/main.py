@@ -16,17 +16,11 @@ from app.api.dashboard import router as dashboard_router
 from app.api.engineering import router as engineering_router
 
 
-# =========================================================
-# Create Database Tables
-# =========================================================
-
+# Create database tables
 create_tables()
 
 
-# =========================================================
-# FastAPI Application
-# =========================================================
-
+# FastAPI application
 app = FastAPI(
     title="AI Internship Roadmap Generator",
     version="1.0.0",
@@ -34,10 +28,7 @@ app = FastAPI(
 )
 
 
-# =========================================================
 # CORS Configuration
-# =========================================================
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -46,11 +37,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# CORS configured for Vercel frontend
 
-# =========================================================
-# Include API Routers
-# =========================================================
 
+# Include API routers
 app.include_router(auth_router)
 app.include_router(student_router)
 app.include_router(skill_router)
@@ -63,10 +53,7 @@ app.include_router(dashboard_router)
 app.include_router(engineering_router)
 
 
-# =========================================================
-# Root Endpoint
-# =========================================================
-
+# Root endpoint
 @app.get("/")
 def home():
     return {
