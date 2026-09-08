@@ -16,15 +16,17 @@ from app.api.dashboard import router as dashboard_router
 from app.api.engineering import router as engineering_router
 
 
-# ==========================================
+# =========================================================
 # Create Database Tables
-# ==========================================
+# =========================================================
+
 create_tables()
 
 
-# ==========================================
+# =========================================================
 # FastAPI Application
-# ==========================================
+# =========================================================
+
 app = FastAPI(
     title="AI Internship Roadmap Generator",
     version="1.0.0",
@@ -32,9 +34,10 @@ app = FastAPI(
 )
 
 
-# ==========================================
+# =========================================================
 # CORS Configuration
-# ==========================================
+# =========================================================
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -44,33 +47,26 @@ app.add_middleware(
 )
 
 
-# ==========================================
-# Register API Routers
-# ==========================================
+# =========================================================
+# Include API Routers
+# =========================================================
+
 app.include_router(auth_router)
-
 app.include_router(student_router)
-
 app.include_router(skill_router)
-
 app.include_router(student_skill_router)
-
 app.include_router(case_study_router)
-
 app.include_router(recommendation_router)
-
 app.include_router(skill_tree_router)
-
 app.include_router(roadmap_router)
-
 app.include_router(dashboard_router)
-
 app.include_router(engineering_router)
 
 
-# ==========================================
+# =========================================================
 # Root Endpoint
-# ==========================================
+# =========================================================
+
 @app.get("/")
 def home():
     return {
