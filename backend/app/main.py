@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import create_tables
 
-
 # APIs
 from app.api.auth import router as auth_router
 from app.api.students import router as student_router
@@ -17,12 +16,15 @@ from app.api.dashboard import router as dashboard_router
 from app.api.engineering import router as engineering_router
 
 
-
+# ==========================================
 # Create Database Tables
+# ==========================================
 create_tables()
 
 
-
+# ==========================================
+# FastAPI Application
+# ==========================================
 app = FastAPI(
     title="AI Internship Roadmap Generator",
     version="1.0.0",
@@ -30,14 +32,21 @@ app = FastAPI(
 )
 
 
-
+# ==========================================
 # CORS Configuration
-
+# ==========================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        # Local development
         "http://localhost:5173",
-        "http://127.0.0.1:5173"
+        "http://127.0.0.1:5173",
+
+        # Vercel production frontend
+        "https://frontend-gamma-fawn-54.vercel.app",
+
+        # Vercel Git main domain
+        "https://frontend-git-main-izaz-akbar-s-projects.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -45,9 +54,9 @@ app.add_middleware(
 )
 
 
-
-# Register Routers
-
+# ==========================================
+# Register API Routers
+# ==========================================
 app.include_router(auth_router)
 
 app.include_router(student_router)
@@ -69,10 +78,11 @@ app.include_router(dashboard_router)
 app.include_router(engineering_router)
 
 
-
+# ==========================================
+# Root Endpoint
+# ==========================================
 @app.get("/")
 def home():
-
     return {
         "message": "Welcome to AI Internship Roadmap Generator",
         "status": "Running Successfully"
